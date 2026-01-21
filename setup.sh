@@ -41,9 +41,9 @@ echo ""
 echo "Updated shopify.app.toml with Mercana config"
 echo ""
 
-# Deploy config without releasing and capture output
-echo "Deploying config to Shopify (without release)..."
-DEPLOY_OUTPUT=$(shopify app deploy --no-release --force 2>&1)
+# Deploy config and release to apply settings
+echo "Deploying config to Shopify..."
+DEPLOY_OUTPUT=$(shopify app deploy --force 2>&1)
 echo "$DEPLOY_OUTPUT"
 
 # Extract app ID from the deploy output URL
