@@ -1,5 +1,6 @@
 # Mercana Shopify App Template
-# This template pre-configures the OAuth settings for Mercana integration
+# Note: This file is a template. The CLI will overwrite it during app init.
+# After init, run the setup script to restore Mercana config and deploy.
 
 name = "Mercana"
 application_url = "https://mercana.so"
@@ -12,3 +13,6 @@ scopes = "read_customers,read_orders,read_products"
 redirect_urls = [
   "https://api.mercana.so/auth/shopify/callback"
 ]
+
+[webhooks]
+api_version = "2024-01"
