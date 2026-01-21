@@ -41,16 +41,37 @@ echo ""
 echo "Updated shopify.app.toml with Mercana config"
 echo ""
 
-# Deploy config without releasing
+# Deploy config without releasing and capture output
 echo "Deploying config to Shopify (without release)..."
-shopify app deploy --no-release --force
+DEPLOY_OUTPUT=$(shopify app deploy --no-release --force 2>&1)
+echo "$DEPLOY_OUTPUT"
+
+# Extract app ID from the deploy output URL
+# URL format: https://dev.shopify.com/dashboard/199632589/apps/314274119681/versions/...
+APP_ID=$(echo "$DEPLOY_OUTPUT" | grep -o 'apps/[0-9]*' | head -1 | cut -d'/' -f2)
 
 echo ""
 echo "========================================="
 echo "SETUP COMPLETE"
 echo "========================================="
 echo "Client ID: $CLIENT_ID"
+echo "App ID: $APP_ID"
 echo ""
-echo "Now get the Client Secret from the Partner Dashboard:"
-echo "https://dev.shopify.com/dashboard/199632589/apps"
+
+if [ -n "$APP_ID" ]; then
+    SETTINGS_URL="https://dev.shopify.com/dashboard/199632589/apps/$APP_ID/settings"
+    echo "Opening Partner Dashboard to get Client Secret..."
+    echo "$SETTINGS_URL"
+
+    # Open the browser (works on macOS)
+    if command -v open &> /dev/null; then
+        open "$SETTINGS_URL"
+    elif command -v xdg-open &> /dev/null; then
+        xdg-open "$SETTINGS_URL"
+    fi
+else
+    echo "Could not extract App ID. Please go to:"
+    echo "https://dev.shopify.com/dashboard/199632589/apps"
+fi
+
 echo "========================================="
