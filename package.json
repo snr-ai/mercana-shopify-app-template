@@ -1,0 +1,7 @@
+{
+  "name": "mercana-shopify-app-template",
+  "version": "1.0.0",
+  "description": "Minimal Shopify app template for Mercana OAuth integration",
+  "private": true,
+  "scripts": {}
+}

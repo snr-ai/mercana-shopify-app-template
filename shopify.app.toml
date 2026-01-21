@@ -1,0 +1,14 @@
+# Mercana Shopify App Template
+# This template pre-configures the OAuth settings for Mercana integration
+
+name = "Mercana"
+application_url = "https://mercana.so"
+embedded = false
+
+[access_scopes]
+scopes = "read_customers,read_orders,read_products"
+
+[auth]
+redirect_urls = [
+  "https://api.mercana.so/auth/shopify/callback"
+]
