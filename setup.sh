@@ -41,8 +41,13 @@ echo ""
 echo "Updated shopify.app.toml with Mercana config"
 echo ""
 
-# Deploy config and release to apply settings
-echo "Deploying config to Shopify..."
+# Install dependencies for extensions
+echo "Installing dependencies..."
+npm install
+echo ""
+
+# Deploy config and extensions
+echo "Deploying app config and extensions to Shopify..."
 DEPLOY_OUTPUT=$(shopify app deploy --force 2>&1)
 echo "$DEPLOY_OUTPUT"
 
@@ -56,6 +61,10 @@ echo "SETUP COMPLETE"
 echo "========================================="
 echo "Client ID: $CLIENT_ID"
 echo "App ID: $APP_ID"
+echo ""
+echo "Extensions deployed:"
+echo "  - mercana-customer-card (Customer detail page)"
+echo "  - mercana-order-card (Order detail page)"
 echo ""
 
 if [ -n "$APP_ID" ]; then

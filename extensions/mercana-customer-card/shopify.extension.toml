@@ -1,0 +1,9 @@
+api_version = "2025-10"
+[[extensions]]
+name = "t:name"
+handle = "mercana-customer-card"
+type = "ui_extension"
+
+[[extensions.targeting]]
+module = "./src/BlockExtension.jsx"
+target = "admin.customer-details.block.render"

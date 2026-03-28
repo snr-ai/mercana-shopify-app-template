@@ -1,7 +1,12 @@
 {
   "name": "mercana-shopify-app-template",
   "version": "1.0.0",
-  "description": "Minimal Shopify app template for Mercana OAuth integration",
+  "description": "Shopify app template for Mercana — OAuth + admin extensions",
   "private": true,
-  "scripts": {}
+  "scripts": {},
+  "dependencies": {
+    "@shopify/ui-extensions": "2025.10.14",
+    "preact": "^10.29.0",
+    "@preact/signals": "^2.8.2"
+  }
 }

@@ -1,6 +1,6 @@
 # Mercana Shopify App Template
 
-Minimal Shopify app template for creating per-customer Mercana OAuth apps.
+Shopify app template for Mercana — creates a per-customer OAuth app with admin extensions (customer card + order card).
 
 ## Usage
 
@@ -23,7 +23,8 @@ cd mercana-<storename>
 This script will:
 1. Extract the Client ID from the generated config
 2. Overwrite the config with Mercana settings (redirect URL, app URL, scopes)
-3. Deploy the config to Shopify (without releasing)
+3. Install extension dependencies
+4. Deploy the config and extensions to Shopify
 
 ### Step 3: Get the Client Secret
 
@@ -37,9 +38,16 @@ https://dev.shopify.com/dashboard/199632589/apps
 - **Scopes**: `read_customers`, `read_orders`, `read_products`
 - **Redirect URL**: `https://api.mercana.so/auth/shopify/callback`
 
+## Extensions
+
+- **mercana-customer-card** — Shows Mercana enrichment data on the customer detail page
+- **mercana-order-card** — Shows Mercana enrichment data on the order detail page
+
+Both extensions authenticate via Shopify session tokens and call `api.mercana.so/shopify-extension/customer-card`. Staff permissions are enforced — users without `read_customers` access see a permission error.
+
 ## After Setup
 
 1. Copy the **Client ID** (shown by the setup script)
 2. Get the **Client Secret** from the Partner Dashboard
-3. Store them in Mercana for the organization
+3. Store them in Mercana for the organization (via `/shopify-onboarding` or `/create-org`)
 4. Complete the OAuth install flow
