@@ -103,34 +103,6 @@ function Extension() {
 
       const orderGid = selected[0].id;
 
-      // Resolve customer from order via Shopify GraphQL
-      let customerGid = null;
-      let customerEmail = null;
-      try {
-        const gqlResult = await shopify.query(`
-          query GetOrderCustomer($id: ID!) {
-            order(id: $id) {
-              customer {
-                id
-                email
-              }
-            }
-          }
-        `, { variables: { id: orderGid } });
-        customerGid = gqlResult?.data?.order?.customer?.id;
-        customerEmail = gqlResult?.data?.order?.customer?.email;
-      } catch (e) {
-        console.error("Failed to fetch order customer:", e);
-        setState("error");
-        setError("Unable to resolve customer from order");
-        return;
-      }
-
-      if (!customerGid) {
-        setState("not_found");
-        return;
-      }
-
       // Get the Shopify session token
       const token = await shopify.auth.idToken();
       if (!token) {
@@ -139,11 +111,8 @@ function Extension() {
         return;
       }
 
-      // Call the same customer-card endpoint
-      let url = `${API_BASE}/shopify-extension/customer-card?customer_gid=${encodeURIComponent(customerGid)}`;
-      if (customerEmail) {
-        url += `&customer_email=${encodeURIComponent(customerEmail)}`;
-      }
+      // Pass order_gid to the backend — it resolves the customer from the order
+      let url = `${API_BASE}/shopify-extension/customer-card?order_gid=${encodeURIComponent(orderGid)}`;
 
       const res = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
