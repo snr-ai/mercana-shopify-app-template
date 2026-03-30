@@ -138,7 +138,7 @@ function Extension() {
       }
 
       setData(payload);
-      setState("loaded");
+      setState(payload.is_wrong_person ? "wrong_person" : "loaded");
     } catch (e) {
       console.error("Failed to load Mercana card:", e);
       setState("error");
@@ -171,6 +171,28 @@ function Extension() {
       <s-admin-block heading="Mercana Intel">
         <s-stack direction="block" gap="base" padding="base base">
           <s-text color="subdued">You don't have permission to view customer data. Contact your store admin.</s-text>
+        </s-stack>
+      </s-admin-block>
+    );
+  }
+
+  if (state === "wrong_person") {
+    const wpName = [data.first_name, data.last_name].filter(Boolean).join(" ") || "Unknown";
+    return (
+      <s-admin-block heading="Mercana Intel">
+        <s-stack direction="block" gap="small-200">
+          <s-stack direction="inline" gap="small-200">
+            <s-text type="strong">{wpName}</s-text>
+          </s-stack>
+          <s-badge tone="warning" icon="alert">Profile data is being re-verified</s-badge>
+          {data.historic_clv != null && (
+            <s-text color="subdued">CLV: {formatMoney(data.historic_clv)}</s-text>
+          )}
+          {data.mercana_url && (
+            <s-link href={data.mercana_url} target="_blank">
+              View in Mercana →
+            </s-link>
+          )}
         </s-stack>
       </s-admin-block>
     );
