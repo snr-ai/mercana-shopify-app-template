@@ -170,7 +170,7 @@ function Extension() {
       }
 
       setData(payload);
-      setState(payload.is_wrong_person ? "wrong_person" : "loaded");
+      setState(payload.syncing ? "syncing" : payload.is_wrong_person ? "wrong_person" : "loaded");
     } catch (e) {
       console.error("Failed to load Mercana card:", e);
       setState("error");
@@ -225,6 +225,17 @@ function Extension() {
               View in Mercana →
             </s-link>
           )}
+        </s-stack>
+      </s-admin-block>
+    );
+  }
+
+  if (state === "syncing") {
+    return (
+      <s-admin-block heading="Mercana Intel">
+        <s-stack direction="block" gap="small-200" padding="base base">
+          <s-badge tone="info" icon="clock">Enrichment in progress</s-badge>
+          <s-text color="subdued">This profile is being synced and enriched. Check back shortly.</s-text>
         </s-stack>
       </s-admin-block>
     );
