@@ -48,7 +48,7 @@ echo ""
 
 # Deploy config and extensions
 echo "Deploying app config and extensions to Shopify..."
-DEPLOY_OUTPUT=$(shopify app deploy --force 2>&1)
+DEPLOY_OUTPUT=$(shopify app deploy --allow-updates 2>&1)
 echo "$DEPLOY_OUTPUT"
 
 # Extract app ID from the deploy output URL
